@@ -1,37 +1,27 @@
 'use strict'
 
+const PasswordHowto = require('./lib/PasswordHowto')
+
 exports.handle = (client) => {
   // Create steps
-  const sayHello = client.createStep({
-    satisfied() {
-      return Boolean(client.getConversationState().helloSent)
-    },
+  const passwordHowto = client.createStep({
+      satisfied() {
+          return false
+      },
+      PasswordHowto()
+      console.log('person wants to know how to make a good password')
 
-    prompt() {
-      client.addResponse('welcome')
-      client.addResponse('provide/documentation', {
-        documentation_link: 'http://docs.init.ai',
-      })
-      client.addResponse('provide/instructions')
+      prompt() {
+        client.addResponse('password/howto')
+        client.done()
+      }
+  })}
 
-      client.updateConversationState({
-        helloSent: true
-      })
-
-      client.done()
-    }
-  })
-
-  const untrained = client.createStep({
-    satisfied() {
-      return false
-    },
-
-    prompt() {
-      client.addResponse('apology/untrained')
-      client.done()
-    }
-  })
+  // prompt(callback){
+  //     const environment = client.getCurrentApplicationEnvironment()
+  //     PasswordHowto()
+  //     console.log('Voila')
+  // }
 
   client.runFlow({
     classifications: {
@@ -41,9 +31,9 @@ exports.handle = (client) => {
       // configure responses to be automatically sent as predicted by the machine learning model
     },
     streams: {
-      main: 'onboarding',
-      onboarding: [sayHello],
-      end: [untrained],
+      main: 'passwordhowto',
+      passwordhowto: [passwordHowto],
+      //end: [untrained],
     },
   })
 }
