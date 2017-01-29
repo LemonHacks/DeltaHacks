@@ -12,6 +12,7 @@ exports.handle = function handle(client) {
 
       extractInfo() {
           console.log("extractInfo is running...")
+          console.log("client message is ", client.getMessagePart())
           console.log("Conversation state: ", client.getConversationState())
           let num = client.getFirstEntityWithRole(client.getMessagePart(), 'number')
           console.log("num: ", num)
