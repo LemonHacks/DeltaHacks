@@ -27,7 +27,9 @@ exports.handle = function handle(client) {
 
       prompt() {
         console.log("prompt is running...")
-        client.addResponse('password/good')
+        if (parsetInt(client.getConversationState().charLength) > 8) {
+            client.addResponse('password/good')
+        } else client.addResponse('password/bad')
         client.done()
     },
   })
