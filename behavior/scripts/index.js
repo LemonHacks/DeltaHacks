@@ -2,21 +2,39 @@
 
 const PasswordHowto = require('./lib/password_howto')
 
-exports.handle = (client) => {
+exports.handle = function handle(client) {
   // Create steps
   const passwordHowto = client.createStep({
       satisfied() {
-          return false
+          return Boolean(client.getConversationState().good_password)
       },
-     // PasswordHowto()
-     // console.log('person wants to know how to make a good password')
+
+      extractInfo() {
+          const goodPass = client.getEntities(client.getMessagePart(), 'good password')
+          if (goodPass) {
+              client.updateConversationState({
+                  goodPass: true,
+              })
+              console.log('goodPass is defined')
+          }
+      },
 
       prompt() {
-        client.addResponse('password/howto')
+        client.addResponse('password/tips')
         client.done()
     },
   })
 
+  // const passwordTips = client.createStep({
+  //     satisfied() {
+  //         return false
+  //     },
+  //
+  //     prompt() {
+  //       //client.addResponse('password/tips')
+  //       client.done()
+  //     },
+  // })
   // prompt(callback){
   //     const environment = client.getCurrentApplicationEnvironment()
   //     PasswordHowto()
