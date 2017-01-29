@@ -1,5 +1,5 @@
-How can I make a good [one](number)?
-* password/howto
+Are [eight](number/passlength) characters enough for a password?
+* password/checkstrength
 
-< Here are some tips for making good passwords:
-* password/tips
+< Yes, it's enough.
+* password/good

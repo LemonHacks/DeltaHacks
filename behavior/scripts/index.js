@@ -7,25 +7,27 @@ exports.handle = function handle(client) {
   const passwordHowto = client.createStep({
       satisfied() {
           console.log("satisfied is running...")
-          return false;
+          let charLengthExists = Boolean(client.getConversationState().charLength)
+          console.log("char length", charLengthExists)
+          return charLengthExists
       },
 
       extractInfo() {
           console.log("extractInfo is running...")
           console.log("client message is ", client.getMessagePart())
           console.log("Conversation state: ", client.getConversationState())
-          let num = client.getFirstEntityWithRole(client.getMessagePart(), 'number')
+          let num = client.getFirstEntityWithRole(client.getMessagePart(), 'number/passlength')
           console.log("num: ", num)
           if (num) {
-              client.updateConversationState('number', num)
+              client.updateConversationState('charLength', num)
               console.log('NUMBER is defined')
           }
           console.log("Conversation state: ", client.getConversationState())
       },
 
       prompt() {
-          console.log("prompt is running...")
-        client.addResponse('password/tips')
+        console.log("prompt is running...")
+        client.addResponse('password/good')
         client.done()
     },
   })
