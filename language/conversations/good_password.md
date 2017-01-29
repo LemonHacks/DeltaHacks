@@ -1,4 +1,4 @@
-How can I make a [good password](good_password)?
+How can I make a good [one](number)?
 * password/howto
 
 < Here are some tips for making good passwords:

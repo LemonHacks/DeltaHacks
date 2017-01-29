@@ -1,22 +1,28 @@
 'use strict'
 
-const PasswordHowto = require('./lib/password_howto')
+//const PasswordHowto = require('./lib/password_howto')
 
 exports.handle = function handle(client) {
   // Create steps
   const passwordHowto = client.createStep({
       satisfied() {
-          return Boolean(client.getConversationState().good_password)
+          let num = client.getFirstEntityWithRole(client.getMessagePart(), 'number')
+          console.log("num ", num)
+         // client.updateConversationState('foo', 'bar')
+          console.log("Conversation state: ", client.getConversationState())
+          console.log('satisfied')
+          return Boolean(client.getConversationState().goodPassword)
       },
 
       extractInfo() {
-          const goodPass = client.getEntities(client.getMessagePart(), 'good password')
+          console.log("Conversation state: ", client.getConversationState())
+          let goodPass = client.getFirstEntityWithRole(client.getMessagePart(), 'password#good')
+          console.log("goodPass: ", goodPass)
           if (goodPass) {
-              client.updateConversationState({
-                  goodPass: true,
-              })
+              client.updateConversationState('goodPassword', goodPass)
               console.log('goodPass is defined')
           }
+          console.log("Conversation state: ", client.getConversationState())
       },
 
       prompt() {
