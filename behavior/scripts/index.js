@@ -1,6 +1,6 @@
 'use strict'
 
-const PasswordHowto = require('./lib/PasswordHowto')
+const PasswordHowto = require('./lib/password_howto')
 
 exports.handle = (client) => {
   // Create steps
@@ -8,14 +8,14 @@ exports.handle = (client) => {
       satisfied() {
           return false
       },
-      PasswordHowto()
-      console.log('person wants to know how to make a good password')
+     // PasswordHowto()
+     // console.log('person wants to know how to make a good password')
 
       prompt() {
         client.addResponse('password/howto')
         client.done()
-      }
-  })}
+    },
+  })
 
   // prompt(callback){
   //     const environment = client.getCurrentApplicationEnvironment()
@@ -34,6 +34,6 @@ exports.handle = (client) => {
       main: 'passwordhowto',
       passwordhowto: [passwordHowto],
       //end: [untrained],
-    },
+    }
   })
 }
