@@ -6,26 +6,24 @@ exports.handle = function handle(client) {
   // Create steps
   const passwordHowto = client.createStep({
       satisfied() {
-          let num = client.getFirstEntityWithRole(client.getMessagePart(), 'number')
-          console.log("num ", num)
-         // client.updateConversationState('foo', 'bar')
-          console.log("Conversation state: ", client.getConversationState())
-          console.log('satisfied')
-          return Boolean(client.getConversationState().goodPassword)
+          console.log("satisfied is running...")
+          return false;
       },
 
       extractInfo() {
+          console.log("extractInfo is running...")
           console.log("Conversation state: ", client.getConversationState())
-          let goodPass = client.getFirstEntityWithRole(client.getMessagePart(), 'password#good')
-          console.log("goodPass: ", goodPass)
-          if (goodPass) {
-              client.updateConversationState('goodPassword', goodPass)
-              console.log('goodPass is defined')
+          let num = client.getFirstEntityWithRole(client.getMessagePart(), 'number')
+          console.log("num: ", num)
+          if (num) {
+              client.updateConversationState('number', num)
+              console.log('NUMBER is defined')
           }
           console.log("Conversation state: ", client.getConversationState())
       },
 
       prompt() {
+          console.log("prompt is running...")
         client.addResponse('password/tips')
         client.done()
     },
